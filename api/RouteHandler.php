@@ -3,14 +3,14 @@
 namespace api;
 
 /**
- * Class RoutHandler
+ * Class RouteHandler
  * @package api
  */
 /**
- * Class RoutHandler
+ * Class RouteHandler
  * @package api
  */
-class RoutHandler
+class RouteHandler
 {
     /**
      * @var
@@ -26,7 +26,7 @@ class RoutHandler
     protected $requestMethod;
 
     /**
-     * RoutHandler constructor.
+     * RouteHandler constructor.
      */
     function __construct() {
         $this->requestMethod = $_SERVER['REQUEST_METHOD'];
