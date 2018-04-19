@@ -113,6 +113,7 @@ class ResponseHandler
     {
         header('Content-Type: application/json');
         http_response_code($statusCode);
-        echo json_encode($result); die;
+        echo json_encode($result);
+        die;
     }
 }

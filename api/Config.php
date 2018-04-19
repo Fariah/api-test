@@ -33,10 +33,9 @@ class Config
      * @throws Exception
      */
     public static function getProperty($name) {
-        if(isset(self::$data[$name])) {
-            return self::$data[$name];
-        } else {
+        if(!isset(self::$data[$name])) {
             throw new Exception('Error in Config file', 500);
         }
+        return self::$data[$name];
     }
 }
