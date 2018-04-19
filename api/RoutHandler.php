@@ -6,12 +6,28 @@ namespace api;
  * Class RoutHandler
  * @package api
  */
+/**
+ * Class RoutHandler
+ * @package api
+ */
 class RoutHandler
 {
+    /**
+     * @var
+     */
     protected $request;
+    /**
+     * @var
+     */
     protected $requestUri;
+    /**
+     * @var
+     */
     protected $requestMethod;
 
+    /**
+     * RoutHandler constructor.
+     */
     function __construct() {
         $this->requestMethod = $_SERVER['REQUEST_METHOD'];
         if(stripos($_SERVER['REQUEST_URI'], '?')) {
@@ -28,7 +44,7 @@ class RoutHandler
      */
     protected function getRoutes() {
         return [
-            '/api/devices' => ['method' => 'post', 'controller' => 'DevicesController:register']
+            '/api/devices' => ['method' => 'post', 'controller' => 'Controllers\DevicesController:register']
         ];
     }
 
@@ -58,6 +74,7 @@ class RoutHandler
      */
     public function initRoutes() {
         $routes = $this->getRoutes();
+
         foreach ($routes as $route => $routeData) {
             if($route == $this->requestUri && (strtolower($this->requestMethod) == strtolower($routeData['method']))) {
                 $class = $this->parseClassMethod($routeData['controller'], 'class');

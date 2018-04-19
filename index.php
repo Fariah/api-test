@@ -1,5 +1,6 @@
 <?php
 
+use api\ResponseHandler;
 use api\RoutHandler;
 
 require_once "SplClassLoader.php";
@@ -11,11 +12,8 @@ $routHandler = new RoutHandler();
 
 try {
     $routHandler->initRoutes();
+} catch (PDOException $exception) {
+    ResponseHandler::sendDBErrorResponse($exception);
 } catch (Exception $exception) {
-    $result = [
-        'message' => $exception->getMessage(),
-        'isError' => true,
-        'detail' => $exception->getTrace()
-    ];
-    echo json_encode($result); die;
+    ResponseHandler::sendErrorResponse($exception);
 }
