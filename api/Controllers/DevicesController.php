@@ -6,7 +6,6 @@ namespace api\Controllers;
 use api\BaseClass;
 use api\ResponseHandler;
 use api\Validators\DeviceRegisterValidation;
-use PDOException;
 
 /**
  * Class DevicesController
@@ -45,23 +44,17 @@ class DevicesController extends BaseClass
         $token = $request->deviceTokenViewModel->token;
         $deviceType = $request->deviceTokenViewModel->deviceType;
 
-        try {
-            $stmt = $this->db->prepare("INSERT INTO device_tokens (token, deviceType) VALUES (:token, :deviceType)");
+        $stmt = $this->db->prepare("INSERT INTO device_tokens (token, deviceType) VALUES (:token, :deviceType)");
 
-            $stmt->bindParam(':token', $token);
-            $stmt->bindParam(':deviceType', $deviceType);
+        $stmt->bindParam(':token', $token);
+        $stmt->bindParam(':deviceType', $deviceType);
 
-            $stmt->execute();
+        $stmt->execute();
 
-            $lastInsertId = $this->db->lastInsertId();
-            $selectQuery = $this->db->prepare("SELECT token, deviceType FROM device_tokens WHERE id = :id");
-            $selectQuery->bindParam(':id', $lastInsertId);
-            $selectQuery->execute();
-            $device = $selectQuery->fetchObject();
-        } catch (PDOException $exception) {
-            ResponseHandler::sendDBErrorResponse($exception);
-        }
-
-        ResponseHandler::sendSuccessResponse($device);
+        $responseData = [
+            'token' => $token,
+            'deviceType' => $deviceType
+        ];
+        ResponseHandler::sendSuccessResponse($responseData);
     }
 }

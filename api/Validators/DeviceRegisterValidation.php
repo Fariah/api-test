@@ -29,30 +29,30 @@ class DeviceRegisterValidation extends BaseClass implements ValidationInterface
         if(isset($model->deviceTokenViewModel->token) && isset($model->deviceTokenViewModel->deviceType)) {
 
             if(!$model->deviceTokenViewModel->token) {
-                $this->messages['token'][] = 'token is required';
+                $this->addError('token', 'token is required');
             }
 
             if(!$model->deviceTokenViewModel->deviceType) {
-                $this->messages['deviceType'][] = 'deviceType is required';
+                $this->addError('deviceType', 'deviceType is required');
             }
 
             if(!DeviceToken::checkType($model->deviceTokenViewModel->deviceType)) {
-                $this->messages['deviceType'][] = 'deviceType is wrong';
+                $this->addError('deviceType', 'deviceType is wrong');
             }
 
             if($this->checkIsTokenPresent($model->deviceTokenViewModel->token)) {
-                $this->messages['token'][] = 'Token is already present in DB';
+                $this->addError('token', 'token is already present in DB');
             }
         }
 
         if(!isset($model->deviceTokenViewModel)) {
-            $this->messages['deviceTokenViewModel'][] = 'deviceTokenViewModel is required';
+            $this->addError('deviceTokenViewModel', 'deviceTokenViewModel is required');
         }
         if(!isset($model->deviceTokenViewModel->token)) {
-            $this->messages['token'][] = 'token is required';
+            $this->addError('token', 'token is required');
         }
         if(!isset($model->deviceTokenViewModel->deviceType)) {
-            $this->messages['deviceType'][] = 'deviceType is required';
+            $this->addError('deviceType', 'deviceType is required');
         }
 
         return $this->messages;
@@ -71,5 +71,16 @@ class DeviceRegisterValidation extends BaseClass implements ValidationInterface
         $selectQuery->execute();
 
         return $selectQuery->fetchObject();
+    }
+
+    /**
+     * Add error to Array
+     *
+     * @param $field
+     * @param $message
+     */
+    protected function addError($field, $message)
+    {
+        $this->messages[$field][] = $message;
     }
 }

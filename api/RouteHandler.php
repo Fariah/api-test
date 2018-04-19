@@ -81,7 +81,6 @@ class RouteHandler
                 $method = $this->parseClassMethod($routeData['controller'], 'method');
                 $classObj = new $class();
                 $classObj->$method();
-                die;
             }
         }
         throw new \Exception('Parse url error, no valid urls found for: ' . $this->requestUri);

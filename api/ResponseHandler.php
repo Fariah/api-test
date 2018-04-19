@@ -94,12 +94,8 @@ class ResponseHandler
      *
      * @param stdClass $device
      */
-    public static function sendSuccessResponse(StdClass $device)
+    public static function sendSuccessResponse($responseData)
     {
-        $responseData = [
-            'token' => $device->token,
-            'deviceType' => $device->deviceType
-        ];
         self::sendResponse($responseData, self::$status_201);
     }
 
